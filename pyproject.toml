@@ -1,0 +1,26 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+filterwarnings = [
+    "ignore::DeprecationWarning"
+]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_ignores = true
+ignore_missing_imports = true
+check_untyped_defs = true
+no_implicit_optional = true
+exclude = [
+  "^.venv/",
+  "^build/",
+  "^dist/",
+  "^mlruns/",
+]
+
+
+# This helps for projects where Streamlit and sklearn have partial typing.
+disallow_untyped_defs = false
+strict = false
