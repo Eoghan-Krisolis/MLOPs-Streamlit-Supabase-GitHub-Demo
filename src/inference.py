@@ -12,6 +12,7 @@ import pandas as pd
 from src.config import FEATURES, MODEL_META_PATH, MODEL_PATH
 from src.supabase import insert_prediction
 
+
 # -----------------------------
 # 1) Load Artifacts
 # -----------------------------
