@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import uuid
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, cast
 
 import joblib
 import numpy as np
@@ -25,7 +25,7 @@ def load_model():
 def load_model_meta() -> dict[str, Any]:
     if not MODEL_META_PATH.exists():
         raise FileNotFoundError("model_meta.json not found. Train the model first.")
-    return json.loads(MODEL_META_PATH.read_text(encoding="utf-8"))
+    return cast(dict[str, Any], json.loads(MODEL_META_PATH.read_text(encoding="utf-8")))
 
 
 def get_model_version(meta: dict) -> str:
@@ -35,7 +35,7 @@ def get_model_version(meta: dict) -> str:
 # -----------------------------
 # 2) Prediction Logic
 # -----------------------------
-def make_input_df(features: dict[str, float | int]) -> pd.DataFrame:
+def make_input_df(features: dict[str, Any]) -> pd.DataFrame:
     """
     Ensures input matches training schema.
     """
@@ -73,7 +73,7 @@ def predict_proba_and_label(model, X: pd.DataFrame) -> tuple[str, dict[str, floa
 # 3) Logging
 # -----------------------------
 def build_prediction_row(
-    features: dict[str, float | int],
+    features: dict[str, Any],
     predicted_label: str,
     proba_map: dict[str, float],
     model_version: str,
@@ -81,7 +81,7 @@ def build_prediction_row(
     """
     Creates a row compatible with Supabase storage.
     """
-    row = {
+    row: dict[str, Any] = {
         "request_id": str(uuid.uuid4()),
         "ts": datetime.now(timezone.utc).isoformat(),
         "model_version": model_version,
@@ -101,7 +101,7 @@ def build_prediction_row(
 # -----------------------------
 # 4) Public API
 # -----------------------------
-def predict(features: dict[str, float | int]) -> tuple[str, dict[str, float]]:
+def predict(features: dict[str, Any]) -> tuple[str, dict[str, float]]:
     """
     Main inference entrypoint.
 

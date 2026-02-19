@@ -2,6 +2,10 @@
 testpaths = ["tests"]
 addopts = "-q"
 
+filterwarnings = [
+    "ignore::DeprecationWarning"
+]
+
 [tool.mypy]
 python_version = "3.11"
 warn_return_any = true
