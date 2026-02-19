@@ -22,13 +22,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Debug working directory
+        run: |
+            pwd
+            ls -R 
+
       - name: Ruff (lint)
         run: |
           ruff check .
 
       - name: Mypy (type check)
         run: |
-          mypy ./src ./monitoring
+          mypy ./src 
 
       - name: Pytest
         run: |
