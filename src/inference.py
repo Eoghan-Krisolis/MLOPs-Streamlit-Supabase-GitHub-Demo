@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import uuid
 from datetime import datetime, timezone
-from typing import Dict, Tuple
+from typing import Any
 
 import joblib
 import numpy as np
@@ -11,9 +11,6 @@ import pandas as pd
 
 from src.config import FEATURES, MODEL_META_PATH, MODEL_PATH
 from src.supabase import insert_prediction
-
-print("Loading model from:", MODEL_PATH.resolve())
-
 
 # -----------------------------
 # 1) Load Artifacts
@@ -24,7 +21,7 @@ def load_model():
     return joblib.load(MODEL_PATH)
 
 
-def load_model_meta() -> dict:
+def load_model_meta() -> dict[str, Any]:
     if not MODEL_META_PATH.exists():
         raise FileNotFoundError("model_meta.json not found. Train the model first.")
     return json.loads(MODEL_META_PATH.read_text(encoding="utf-8"))
@@ -37,7 +34,7 @@ def get_model_version(meta: dict) -> str:
 # -----------------------------
 # 2) Prediction Logic
 # -----------------------------
-def make_input_df(features: Dict[str, float | int]) -> pd.DataFrame:
+def make_input_df(features: dict[str, float | int]) -> pd.DataFrame:
     """
     Ensures input matches training schema.
     """
@@ -56,7 +53,7 @@ def make_input_df(features: Dict[str, float | int]) -> pd.DataFrame:
     return df
 
 
-def predict_proba_and_label(model, X: pd.DataFrame) -> Tuple[str, Dict[str, float]]:
+def predict_proba_and_label(model, X: pd.DataFrame) -> tuple[str, dict[str, float]]:
     """
     Returns:
     - predicted label (string)
@@ -75,11 +72,11 @@ def predict_proba_and_label(model, X: pd.DataFrame) -> Tuple[str, Dict[str, floa
 # 3) Logging
 # -----------------------------
 def build_prediction_row(
-    features: Dict[str, float | int],
+    features: dict[str, float | int],
     predicted_label: str,
-    proba_map: Dict[str, float],
+    proba_map: dict[str, float],
     model_version: str,
-) -> dict:
+) -> dict[str, Any]:
     """
     Creates a row compatible with Supabase storage.
     """
@@ -103,7 +100,7 @@ def build_prediction_row(
 # -----------------------------
 # 4) Public API
 # -----------------------------
-def predict(features: Dict[str, float | int]) -> Tuple[str, Dict[str, float]]:
+def predict(features: dict[str, float | int]) -> tuple[str, dict[str, float]]:
     """
     Main inference entrypoint.
 
