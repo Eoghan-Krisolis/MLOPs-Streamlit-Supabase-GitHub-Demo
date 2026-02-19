@@ -14,6 +14,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer, OneHotEncoder, OrdinalEncoder
 from sklearn.utils.class_weight import compute_sample_weight
+from src.transformers import clamp_age, clamp_motor_value, fix_gender
+
 
 from src.config import (
     DATASET_PATH,
@@ -59,11 +61,7 @@ def split_data(df: pd.DataFrame):
 # -----------------------------
 # 2) Preprocessing
 # -----------------------------
-def fix_gender(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Fix common gender encoding issues.
-    """
-    return df.replace({"f": "female", "m": "male"})
+
 
 
 def build_preprocessor() -> ColumnTransformer:
@@ -89,14 +87,15 @@ def build_preprocessor() -> ColumnTransformer:
     age_transformer = Pipeline(
         steps=[
             ("imputer", SimpleImputer(strategy="median")),
-            ("clamp", FunctionTransformer(lambda x: np.clip(x, 18, 100))),
+            ("clamp", FunctionTransformer(clamp_age)),
         ]
     )
 
     motor_value_transformer = Pipeline(
         steps=[
             ("imputer", SimpleImputer(strategy="median")),
-            ("clamp", FunctionTransformer(lambda x: np.clip(x, 0, 100000))),
+            ("clamp", FunctionTransformer(clamp_motor_value)
+),
         ]
     )
 

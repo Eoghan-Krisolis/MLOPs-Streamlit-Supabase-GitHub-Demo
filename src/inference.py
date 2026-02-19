@@ -11,8 +11,10 @@ import pandas as pd
 
 from src.config import FEATURES, MODEL_META_PATH, MODEL_PATH
 from src.supabase import insert_prediction
+import src.train
 
 
+print("Loading model from:", MODEL_PATH.resolve())
 # -----------------------------
 # 1) Load Artifacts
 # -----------------------------
@@ -39,7 +41,19 @@ def make_input_df(features: Dict[str, float | int]) -> pd.DataFrame:
     """
     Ensures input matches training schema.
     """
-    return pd.DataFrame([{k: features[k] for k in FEATURES}])
+    df = pd.DataFrame([{k: features[k] for k in FEATURES}])
+    # Force numeric columns to float
+    numeric_cols = [
+        "Age",
+        "MotorValue",
+        "HealthDependentsAdults",
+        "HealthDependentsKids",
+    ]
+
+    for col in numeric_cols:
+        df[col] = df[col].astype(float)
+
+    return df
 
 
 def predict_proba_and_label(model, X: pd.DataFrame) -> Tuple[str, Dict[str, float]]:
