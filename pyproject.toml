@@ -20,6 +20,7 @@ exclude = [
   "^mlruns/",
 ]
 
+
 # This helps for projects where Streamlit and sklearn have partial typing.
 disallow_untyped_defs = false
 strict = false
