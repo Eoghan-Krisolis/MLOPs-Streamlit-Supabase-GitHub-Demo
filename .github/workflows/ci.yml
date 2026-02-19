@@ -28,7 +28,7 @@ jobs:
 
       - name: Mypy (type check)
         run: |
-          mypy src monitoring
+          mypy ./src ./monitoring
 
       - name: Pytest
         run: |
