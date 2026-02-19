@@ -4,7 +4,6 @@ import json
 from datetime import datetime, timezone
 
 import joblib
-import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import GradientBoostingClassifier
@@ -14,8 +13,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer, OneHotEncoder, OrdinalEncoder
 from sklearn.utils.class_weight import compute_sample_weight
-from src.transformers import clamp_age, clamp_motor_value, fix_gender
-
 
 from src.config import (
     DATASET_PATH,
@@ -25,6 +22,7 @@ from src.config import (
     MODEL_PATH,
     TARGET,
 )
+from src.transformers import clamp_age, clamp_motor_value, fix_gender
 
 
 # -----------------------------
@@ -63,7 +61,6 @@ def split_data(df: pd.DataFrame):
 # -----------------------------
 
 
-
 def build_preprocessor() -> ColumnTransformer:
     """
     Defines preprocessing for each feature group using sklearn pipelines.
@@ -94,8 +91,7 @@ def build_preprocessor() -> ColumnTransformer:
     motor_value_transformer = Pipeline(
         steps=[
             ("imputer", SimpleImputer(strategy="median")),
-            ("clamp", FunctionTransformer(clamp_motor_value)
-),
+            ("clamp", FunctionTransformer(clamp_motor_value)),
         ]
     )
 

@@ -1,11 +1,12 @@
-import pandas as pd
 import json
-from src.supabase import fetch_recent_predictions
+
+import pandas as pd
+
 from monitoring.drift import compute_drift
 from monitoring.log_metrics import make_metrics_row
-from src.supabase import insert_monitoring_metrics
+from src.config import MODEL_META_PATH, MONITORING_DIR
+from src.supabase import fetch_recent_predictions, insert_monitoring_metrics
 from src.train import main as retrain
-from src.config import MONITORING_DIR, MODEL_META_PATH
 
 
 def main():

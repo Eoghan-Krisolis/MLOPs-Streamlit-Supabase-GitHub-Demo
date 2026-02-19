@@ -1,13 +1,13 @@
+import logging
 import os
+
 import requests
 from dotenv import load_dotenv
-import logging
 
 load_dotenv()
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
-
 
 
 def get_connection():
@@ -31,7 +31,7 @@ def insert_prediction(row: dict):
     if url is None:
         logger.info("Supabase logging disabled (no env vars).")
         return
-    
+
     endpoint = f"{url}/rest/v1/predictions"
     r = requests.post(endpoint, headers=headers, json=row)
 
@@ -39,7 +39,7 @@ def insert_prediction(row: dict):
 
     if r.status_code >= 400:
         logger.error("Supabase INSERT error: %s", r.text)
-        
+
     r.raise_for_status()
 
 

@@ -1,6 +1,7 @@
-import streamlit as st
 import sys
 from pathlib import Path
+
+import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT))

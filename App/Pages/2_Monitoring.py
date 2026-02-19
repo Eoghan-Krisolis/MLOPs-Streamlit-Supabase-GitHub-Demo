@@ -1,4 +1,5 @@
 import streamlit as st
+
 from src.config import MONITORING_DIR
 
 st.title("Drift Monitoring")

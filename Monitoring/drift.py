@@ -1,7 +1,8 @@
 import pandas as pd
-from evidently.report import Report
 from evidently.metric_preset import DataDriftPreset
-from src.config import REFERENCE_PATH, FEATURES
+from evidently.report import Report
+
+from src.config import FEATURES, REFERENCE_PATH
 
 
 def compute_drift(current_df):

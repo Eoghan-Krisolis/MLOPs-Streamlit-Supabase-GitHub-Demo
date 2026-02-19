@@ -11,10 +11,10 @@ import pandas as pd
 
 from src.config import FEATURES, MODEL_META_PATH, MODEL_PATH
 from src.supabase import insert_prediction
-import src.train
-
 
 print("Loading model from:", MODEL_PATH.resolve())
+
+
 # -----------------------------
 # 1) Load Artifacts
 # -----------------------------
@@ -63,9 +63,9 @@ def predict_proba_and_label(model, X: pd.DataFrame) -> Tuple[str, Dict[str, floa
     - dict of {class_name: probability}
     """
     proba = model.predict_proba(X)[0]  # shape = (n_classes,)
-    classes = list(model.classes_)     # e.g. ["Email", "Phone", "SMS"]
+    classes = list(model.classes_)  # e.g. ["Email", "Phone", "SMS"]
 
-    proba_map = {cls: float(p) for cls, p in zip(classes, proba)}
+    proba_map = {cls: float(p) for cls, p in zip(classes, proba, strict=False)}
     predicted_label = classes[int(np.argmax(proba))]
 
     return predicted_label, proba_map

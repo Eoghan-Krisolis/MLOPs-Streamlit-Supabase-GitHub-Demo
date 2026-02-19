@@ -1,7 +1,4 @@
-import json
 from datetime import datetime, timezone
-
-from src.supabase import insert_monitoring_metrics
 
 
 def make_metrics_row(

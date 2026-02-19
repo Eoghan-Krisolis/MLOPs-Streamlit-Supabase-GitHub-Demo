@@ -1,5 +1,5 @@
+from src.config import MODEL_META_PATH, MODEL_PATH
 from src.train import main as train_main
-from src.config import MODEL_PATH, MODEL_META_PATH
 
 
 def test_training_creates_artifacts():
