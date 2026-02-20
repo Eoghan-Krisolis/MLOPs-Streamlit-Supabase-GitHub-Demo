@@ -27,12 +27,13 @@ jobs:
 
       - name: Train (ensure artifacts exist)
         run: |
-          python -m src.train
+          test -f models/model.joblib
+          test -f models/model_meta.json
 
       - name: Drift check + report + retrain if needed
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           python -m monitoring.retrain_if_needed
 
