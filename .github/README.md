@@ -2,12 +2,14 @@
 
 A complete, end-to-end MLOps demonstration project showing:
 
--   Model training with scikit-learn
--   Inference via Streamlit
--   Prediction logging to Supabase
--   Data drift monitoring with Evidently
--   Automated monitoring via GitHub Actions
--   CI with Ruff, Mypy, and Pytest
+-   Environment management with [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)
+-   Model training with [scikit-learn](https://scikit-learn.org/stable/) Pipelines
+-   Inference UI via [Streamlit](https://streamlit.io/)
+-   Prediction logging to [Supabase](https://supabase.com/) PostgresSQL
+-   Data drift monitoring with [Evidently](https://pypi.org/project/evidently/)
+-   Version control with [git](https://git-scm.com/) and [GitHub](https://github.com/)
+-   Automated monitoring and retraining via [GitHub Actions](https://github.com/features/actions)
+-   CI with [Ruff](https://pypi.org/project/ruff/), [Mypy](https://pypi.org/project/mypy/), and [Pytest](https://pypi.org/project/pytest/)
 
 This repository is designed for introductory-to-intermediate MLOps
 training.
@@ -28,7 +30,7 @@ flowchart TD
     H --> I{Drift >= Threshold?}
 
     I -- No --> J[Log Monitoring Metrics]
-    I -- Yes --> K[Raise Alert]
+    I -- Yes --> K[Raise Alert & Retrain]
     K --> J
 
     J --> L[Supabase - monitoring_metrics table]
@@ -181,6 +183,7 @@ Create a `.env` file in your repo root:
 
     SUPABASE_URL=https://``your-project-id``.supabase.co
     SUPABASE_KEY=your_anon_public_key
+    SUPABASE_SERVICE_ROLE_KEY=your_secret_key
 
 Add `.env` to `.gitignore`.
 
@@ -368,5 +371,11 @@ pytest -q
 ```
 
 ## Summary
-
-Train → Deploy → Log → Monitor → Alert
+``` mermaid
+flowchart LR
+    Train --> Deploy
+    Deploy --> Log
+    Log --> Monitor
+    Monitor --> Alert
+    Alert --> Train
+```
