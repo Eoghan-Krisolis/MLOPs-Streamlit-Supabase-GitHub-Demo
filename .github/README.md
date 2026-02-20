@@ -183,6 +183,7 @@ Create a `.env` file in your repo root:
 
     SUPABASE_URL=https://``your-project-id``.supabase.co
     SUPABASE_KEY=your_anon_public_key
+    SUPABASE_SERVICE_ROLE_KEY=your_secret_key
 
 Add `.env` to `.gitignore`.
 
@@ -370,5 +371,11 @@ pytest -q
 ```
 
 ## Summary
-
-Train → Deploy → Log → Monitor → Alert
+``` mermaid
+flowchart LR
+    Train --> Deploy
+    Deploy --> Log
+    Log --> Monitor
+    Monitor --> Alert
+    Alert --> Train
+```
