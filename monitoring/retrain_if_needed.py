@@ -30,7 +30,7 @@ def main():
     report.save_html(MONITORING_DIR / "drift_report.html")
 
     if drift_share >= threshold:
-        print("Retraining triggered.")
+        print("::warning::Drift threshold exceeded. Automatic retraining trigerred. New training data may be needed.")
         retrain()
     else:
         print("No retraining needed.")
