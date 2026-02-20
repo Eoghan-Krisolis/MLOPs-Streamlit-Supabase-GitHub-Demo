@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import Any
+from typing import Any, cast
 
 import requests
 from dotenv import load_dotenv
@@ -81,7 +81,7 @@ def fetch_recent_predictions(window_days: int = 7) -> list[dict[str, Any]]:
         params=params,
     )
     r.raise_for_status()
-    return r.json()
+    return cast(list[dict[str, Any]], r.json())
 
 
 def insert_monitoring_metrics(row: dict[str, Any]) -> None:
