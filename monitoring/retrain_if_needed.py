@@ -27,7 +27,8 @@ def main():
 
     print("Drift share:", drift_share)
 
-    report.save_html(MONITORING_DIR / "drift_report.html")
+    report_path = MONITORING_DIR / "drift_report.html"
+    report.save_html(str(report_path))
 
     if drift_share >= threshold:
         print("::warning::Drift threshold exceeded. Automatic retraining trigerred. New training data may be needed.")
