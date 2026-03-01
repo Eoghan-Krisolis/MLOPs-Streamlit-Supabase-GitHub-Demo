@@ -1,6 +1,6 @@
 {
-  "model_version": "20260228012932",
-  "trained_at_utc": "2026-02-28T01:29:32.350368+00:00",
+  "model_version": "20260301015948",
+  "trained_at_utc": "2026-03-01T01:59:48.092980+00:00",
   "balanced_accuracy": 0.6336007657496824,
   "features": [
     "CreditCardType",
