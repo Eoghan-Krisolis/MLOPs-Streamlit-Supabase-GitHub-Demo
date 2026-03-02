@@ -2,7 +2,7 @@ name: Monitoring (cron retrain)
 
 on:
   schedule:
-    - cron: "1 0 * * *" # daily 10:00 UTC
+    - cron: "0 13 * * *" # daily 13:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Train (ensure artifacts exist)
+      - name: Ensure model artifacts exist
         run: |
           test -f models/model.joblib
           test -f models/model_meta.json
