@@ -69,7 +69,7 @@ def main():
                 f.write(f"- Drift share: {drift_share:.3f}\n")
                 f.write(f"- Drift threshold: {threshold}\n")
                 if retrain_triggered:
-                    f.write(f"*Action required:* Significant feature drift detected, update training data and retrain model")
+                    f.write("*Action required:* Significant feature drift detected, update training data and retrain model")
     except Exception:
         pass
 
