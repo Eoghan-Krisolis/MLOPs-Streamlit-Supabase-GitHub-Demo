@@ -1,4 +1,5 @@
 import json
+import os
 
 import pandas as pd
 
@@ -7,8 +8,6 @@ from monitoring.log_metrics import make_metrics_row
 from src.config import MODEL_META_PATH, MONITORING_DIR
 from src.supabase import fetch_recent_predictions, insert_monitoring_metrics
 from src.train import main as retrain
-import os
-
 
 
 def main():
